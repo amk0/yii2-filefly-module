@@ -12,6 +12,7 @@ use creocoder\flysystem\Filesystem;
 use dmstr\web\traits\AccessBehaviorTrait;
 use hrzg\filefly\helpers\FsManager;
 use yii\web\HttpException;
+use dmstr\willnorrisImageproxy\Url;
 
 /**
  * Class Module
@@ -122,6 +123,7 @@ class Module extends \yii\base\Module
     public $streamExpireOffset = 604800;
 
     private $_manager;
+    private $thumbnailPreset = '50x50q50';
 
     /**
      * @inheritdoc
@@ -168,4 +170,8 @@ class Module extends \yii\base\Module
         return $this->_manager;
     }
 
+    public function thumbnailCallback($basename)
+    {
+        return Url::image($basename, $this->thumbnailPreset);
+    }
 }
